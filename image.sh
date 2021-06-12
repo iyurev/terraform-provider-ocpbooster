@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 
 BRANCH=$(git branch --format="%(refname:lstrip=2)")
-COMMIT=""
+COMMIT=$(git log --pretty=format:'%h' | head -n 1)
 
 IMAGE="terraform-openshift"
-TAG="dev"
+DEFAULT_TAG="latest"
 
-podman build -t ${IMAGE}:${TAG} -f image/Dockerfile .
+printf "Current branch name: %s, short commit number: %s\n"  $BRANCH $COMMIT
 
+podman build -t ${IMAGE}:${DEFAULT_TAG} -f image/Dockerfile .
+
+podman tag ${IMAGE}:${DEFAULT_TAG} ${IMAGE}:${COMMIT}

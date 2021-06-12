@@ -31,7 +31,7 @@ func Provider() *schema.Provider {
 			"installer_path": {
 				Type:        schema.TypeString,
 				Optional:    true,
-				Description: "openshift-install path",
+				Description: "Local filesystem path to installing openshift-install tool",
 				Sensitive:   false,
 				Required:    false,
 			},

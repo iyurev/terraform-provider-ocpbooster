@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-OCP_VERSION="4.7.14"
+OCP_VERSION="4.7.13"
 CACHE_DIR=/tmp/openshift-installer-dist/
 INSTALLER_ASSET="${PWD}/pkg/booster/assets/"
 
@@ -10,7 +10,7 @@ mkdir -p $CACHE_DIR
 for platform in linux mac; do
 
 if [[ ! -f ${CACHE_DIR}/openshift-install-${platform}.tar.gz ]]; then
-INSTALLER_URL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/${OCP_VERSION}/openshift-install-${platform}.tar.gz"
+INSTALLER_URL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-install-${platform}-${OCP_VERSION}.tar.gz"
 printf "Download openshift-install binary from %s, for %s, to the cache directory: %s\n" $INSTALLER_URL  $platform  $CACHE_DIR
 curl --fail -L  -o ${CACHE_DIR}/openshift-install-${platform}.tar.gz  ${INSTALLER_URL}
 fi

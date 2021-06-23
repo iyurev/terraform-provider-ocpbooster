@@ -1,3 +1,4 @@
+
 package provider
 
 import (
@@ -10,6 +11,7 @@ import (
 
 func resourceOcpCluster() *schema.Resource {
 	return &schema.Resource{
+		Description: "Initial configuration for installing a new OpenShift cluster",
 		Schema: map[string]*schema.Schema{
 			"cluster_name": {
 				Type:        schema.TypeString,
@@ -46,6 +48,8 @@ func resourceOcpCluster() *schema.Resource {
 				Sensitive: false,
 				ForceNew:  true,
 				Optional:  true,
+				Description: "Cluster additional CA trust bundle, '.additionalTrustBundle: in the install-config.yaml",
+
 			},
 			"offline_mirror": {
 				Type:      schema.TypeString,
@@ -53,41 +57,49 @@ func resourceOcpCluster() *schema.Resource {
 				Sensitive: false,
 				ForceNew:  true,
 				Optional:  true,
+				Description: "Mirror for offline cluster, '.imageContentSources: in the install-config.yaml",
 			},
 			"bootstrap_ign": {
 				Type:      schema.TypeString,
 				Computed:  true,
 				Sensitive: false,
+				Description: "Bootstrap ignition configuration bundle, it's content of bootstrap.ign",
 			},
 			"cluster_ca": {
 				Type:      schema.TypeString,
 				Computed:  true,
 				Sensitive: false,
+				Description: "Self-signed cluster CA",
 			},
 			"master_ign": {
 				Type:      schema.TypeString,
 				Computed:  true,
 				Sensitive: false,
+				Description: "Master node ignition configuration bundle",
 			},
 			"worker_ign": {
 				Type:      schema.TypeString,
 				Computed:  true,
 				Sensitive: false,
+				Description: "Worker node ignition configuration bundle",
 			},
 			"kubeadmin_password": {
 				Type:      schema.TypeString,
 				Computed:  true,
 				Sensitive: true,
+				Description: "Password for service user account - kubeadmin",
 			},
 			"kubeconfig": {
 				Type:      schema.TypeString,
 				Computed:  true,
 				Sensitive: true,
+				Description: "kubeconfig with super admin credentials",
 			},
 			"cluster_id": {
 				Type:      schema.TypeString,
 				Computed:  true,
 				Sensitive: false,
+				Description: "Cluster unique ID",
 			},
 		},
 		CreateContext: resourceOcpClusterCreate,
@@ -168,12 +180,6 @@ func resourceOcpClusterCreate(ctx context.Context, d *schema.ResourceData, m int
 }
 
 func resourceOcpClusterRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	//var diags diag.Diagnostics
-
 	return nil
 }
 
-//func resourceOcpClusterUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-//	var diags diag.Diagnostics
-//	return diags
-//}

@@ -10,28 +10,24 @@ import (
 	"github.com/terraform-modules-collection/ocpbooster/pkg/config"
 )
 
-type configureVal struct {
-	pubKey     string
-	pullSecret string
-}
 
-var errEmptyPubKey = errors.New("empty SSH public key")
-var errEmptyPullSecret = errors.New("empty image pull secret")
 var errEmptyStr = errors.New("it seems like someone give us empty string")
-
 var installerPath = ""
+
+func init() {
+	schema.DescriptionKind = schema.StringMarkdown
+}
 
 func Provider() *schema.Provider {
 	return &schema.Provider{
 		ResourcesMap: map[string]*schema.Resource{
 			"ocpbooster_cluster": resourceOcpCluster(),
 		},
-		//DataSourcesMap: map[string]*schema.Resource{},
 		Schema: map[string]*schema.Schema{
 			"installer_path": {
 				Type:        schema.TypeString,
 				Optional:    true,
-				Description: "Local filesystem path to installing openshift-install tool",
+				Description: "Local filesystem path to install - openshift-install tool",
 				Sensitive:   false,
 				Required:    false,
 			},

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-OCP_VERSION="4.7.13"
+OCP_VERSION="4.7.16"
 CACHE_DIR=/tmp/openshift-installer-dist/
 INSTALLER_ASSET="${PWD}/pkg/booster/assets/"
 

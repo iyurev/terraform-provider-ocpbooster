@@ -6,17 +6,17 @@
 It's simple terraform provider can help you  with RH OpenShift UPI cluster installation    
 
 
-If we through up the official UPI installation guide, then your find out that you need some tied manual actions with an installation tool - openshift-install
+If you through up the official RH OpenShift UPI installation guide, then your find out that you need some tied manual actions with an installation tool - openshift-install
 
 1. Download openshift-install itself from https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/
 2. Prepare a correct install-config.yaml  in the installation directory
-2. Run ```openshift-install create ignition-config``` then  grub ignition configs and  admin cluster credentials to use it later.
+Run ```openshift-install create ignition-config``` then  grub ignition configs and  admin cluster credentials to use it later.
 
 All these actions can be fulfilled  with this terraform module, e.g.
 
 ```bigquery
-resource "ocpbooster_cluster" "my-cluster" {
-  cluster_name = "my-cluster"
+resource "ocpbooster_cluster" "my-ocpbooster_cluster" {
+  cluster_name = "my-ocpbooster_cluster"
   base_domain = "ocp.local"
   pull_secret = var.pullSecret
   pub_ssh_key = var.pubKey
@@ -36,7 +36,7 @@ resource "aws_s3_bucket_object" "bootstrap-ign" {
 }
 ```
 
-Example 2, just send bootstrap ignition and a new cluster CA bundle to the next module through output:
+Example 2, it just sends bootstrap ignition and a new cluster CA bundle to the next module through output:
 ```bigquery
 output "bootstrap_ign" {
   value = ocpbooster_cluster.my-cluster.bootstrap_ign
@@ -46,3 +46,16 @@ output "cluster_ca" {
   value = ocpbooster_cluster.my-cluster.cluster_ca
 }
 ```
+
+As you can see this approach can help you to avoid of using the dirty hacks in your terraform module for provisioning OpenShift cluster, such as shell provisioner which 
+should call openshift-install tool, parse result and save it somewhere.
+
+
+
+
+
+
+
+
+
+

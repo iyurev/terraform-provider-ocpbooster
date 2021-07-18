@@ -10,7 +10,7 @@ import (
 
 func resourceOcpCluster() *schema.Resource {
 	return &schema.Resource{
-		Description: "Initial configuration for installing a new OpenShift cluster",
+		Description: "Initial configuration for installing a new OpenShift ocpbooster_cluster",
 		Schema: map[string]*schema.Schema{
 			"cluster_name": {
 				Type:        schema.TypeString,
@@ -55,7 +55,7 @@ func resourceOcpCluster() *schema.Resource {
 				Sensitive:   false,
 				ForceNew:    true,
 				Optional:    true,
-				Description: "Mirror for offline cluster, '.imageContentSources: in the install-config.yaml",
+				Description: "Mirror for offline ocpbooster_cluster, '.imageContentSources: in the install-config.yaml",
 			},
 			"bootstrap_ign": {
 				Type:        schema.TypeString,
@@ -67,7 +67,7 @@ func resourceOcpCluster() *schema.Resource {
 				Type:        schema.TypeString,
 				Computed:    true,
 				Sensitive:   false,
-				Description: "Self-signed cluster CA",
+				Description: "Self-signed ocpbooster_cluster CA",
 			},
 			"master_ign": {
 				Type:        schema.TypeString,

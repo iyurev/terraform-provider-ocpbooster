@@ -3,6 +3,7 @@ package booster
 import (
 	"bytes"
 	_ "embed"
+	"errors"
 	"fmt"
 	"github.com/Masterminds/sprig"
 	installertypes "github.com/openshift/installer/pkg/types"
@@ -130,10 +131,16 @@ func (b *Booster) fetchAuth() error {
 func (b *Booster) createIgnitions() error {
 	ignitions := &ignitions{}
 	openshiftInst := b.InstallerPath
-	args := []string{"--dir", b.workDir, "create", "ignition-configs"}
+	args := []string{"--dir", b.workDir, "creat", "ignition-configs"}
+	var stdErr bytes.Buffer
 	cmd := exec.Command(openshiftInst, args...)
+	cmd.Stderr = &stdErr
 	err := cmd.Run()
 	if err != nil {
+		var exitErr *exec.ExitError
+		if errors.As(err, &exitErr) {
+			return errors.New(stdErr.String())
+		}
 		return err
 	}
 	if bsIgn, err := readFile(fmt.Sprintf("%s/%s", b.workDir, bootstrapIgnFileName)); err != nil {
@@ -174,4 +181,3 @@ func (b *Booster) genInstallConfig() ([]byte, error) {
 	}
 	return buf.Bytes(), nil
 }
-
